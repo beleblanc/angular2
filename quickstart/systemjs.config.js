@@ -1,6 +1,6 @@
 (function(global) {
   // map tells the System loadr where to look for things
-  var map {
+  var map = {
     'app': 'app',
     '@angular': 'Node_modules/@angular',
     'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
