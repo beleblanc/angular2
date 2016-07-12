@@ -1,3 +1,4 @@
+import {Artist} from "./artist.model";
 export class Album {
   id: string;
   album_type: string;
@@ -7,6 +8,9 @@ export class Album {
   name: string;
   type: string;
   uri: string;
+  tracks: any;
+  release_date: string;
+  artists: Array<Artist>;
 
   constructor(properties:Object) {
     Object.assign(this, properties);
@@ -18,5 +22,17 @@ export class Album {
       tempArray.push(new Album(album));
     });
     return tempArray;
+  }
+
+  getTracks() {
+      return this.tracks.items;
+  }
+
+  hasTracks() {
+    return this.tracks && this.tracks.items.length > 0;
+  }
+
+  hasArtist() {
+    return this.artists.length > 0;
   }
 }
