@@ -13,12 +13,24 @@ export class AppComponent implements OnInit{
   title = 'app works!';
   businesses: Business[];
   categories: Category[];
+  appState: string;
+  activeKey: string;
+  activeBusiness: Business;
+
   constructor(private _businessService: BusinessService) {
 
   }
 
   ngOnInit() {
+    this.appState = 'default';
     this._businessService.getBusinesses().subscribe(res => this.businesses = res);
     this._businessService.getCategories().subscribe(res => this.categories = res);
+  }
+
+  changeState(state: string, selected: Business) {
+    if(selected) {
+      this.activeBusiness = selected;
+    }
+    this.appState = state;
   }
 }

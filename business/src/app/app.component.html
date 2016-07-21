@@ -1,15 +1,66 @@
-<h1>
-  {{title}}
-</h1>
-<h2>Businesses</h2>
-<ul *ngFor="let business of businesses">
-  <li>
-    {{business.company}}
-  </li>
-</ul>
-<h2>Categories</h2>
-<ul *ngFor="let category of categories">
-  <li>
-    {{category.name}}
-  </li>
-</ul>
+<div class="top-bar">
+  <div class="row">
+    <div class="top-bar-left">
+      <ul class="menu">
+        <li class="menu-text">Business Contacts</li>
+      </ul>
+    </div>
+    <div class="top-bar-right">
+
+    </div>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="large-12 columns">
+    <!-- BUSINESSES-->
+    <div *ngIf="businesses && appState == 'default'">
+      <table>
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Category</th>
+            <th>Phone</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let business of businesses">
+            <td>{{business.company}}</td>
+            <td>{{business.category}}</td>
+            <td>{{business.phone}}</td>
+            <td>
+              <button class="button" (click)="changeState('extended', business)">More</button>
+              <button class="button secondary">Edit</button>
+              <button class="button alert">Delete</button>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="appState == 'extended' && activeBusiness">
+      <button class="button secondary" (click)="changeState('default')">Go Back</button>
+      <div class="row">
+        <div class="large-5 columns large-offset-1">
+          <h3>{{activeBusiness.company}}</h3>
+          <p>Category: {{activeBusiness.category}}</p>
+          <p>Years in Business: {{activeBusiness.years_in_business}}</p>
+          <p>{{activeBusiness.description}}</p>
+        </div>
+        <div class="large-5 columns large-offset-1">
+          <h4>Contact Info</h4>
+          <ul>
+            <li>Phone: {{activeBusiness.phone}}</li>
+            <li>Email: {{activeBusiness.email}}</li>
+            <li>Street: {{activeBusiness.street_address}}</li>
+            <li>City: {{activeBusiness.city}}</li>
+            <li>State: {{activeBusiness.state}}</li>
+            <li>Zipcode: {{activeBusiness.Zipcode}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
