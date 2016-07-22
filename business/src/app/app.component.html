@@ -15,6 +15,12 @@
   <div class="large-12 columns">
     <!-- BUSINESSES-->
     <div *ngIf="businesses && appState == 'default'">
+      <button class="button" (click)="changeState('newBusiness', {})">Add +</button>
+      <label for="filter">Filter Category</label>
+      <select (change)="filterCategory(filteredCategory.value)" id="filter" #filteredCategory>
+        <option value="0">Select</option>
+        <option *ngFor="let category of categories" value="{{category.name}}">{{category.name}}</option>
+      </select>
       <table>
         <thead>
           <tr>
@@ -25,14 +31,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let business of businesses">
+          <tr *ngFor="let business of filteredBusinesses">
             <td>{{business.company}}</td>
             <td>{{business.category}}</td>
             <td>{{business.phone}}</td>
             <td>
               <button class="button" (click)="changeState('extended', business)">More</button>
-              <button class="button secondary">Edit</button>
-              <button class="button alert">Delete</button>
+              <button class="button secondary" (click)="changeState('editBusiness', business)">Edit</button>
+              <button class="button alert" (click)="removeBusiness(business)">Delete</button>
             </td>
           </tr>
 
@@ -61,6 +67,54 @@
           </ul>
         </div>
       </div>
+    </div>
+
+    <div *ngIf="appState == 'newBusiness' || appState == 'editBusiness'">
+      <button class="button secondary" (click)="changeState('default')">Cancel</button>
+      <form (ngSubmit)="addBusiness(business)">
+        <div class="row">
+          <div class="large-6 columns">
+            <label>Company</label>
+            <input type="text" placeholder="Company Name..." name="company" [(ngModel)]="business.company">
+          </div>
+          <div class="large-6 columns">
+            <label>Category</label>
+            <select name="category" [(ngModel)]="business.category">
+              <option value="0">Select</option>
+              <option *ngFor="let category of categories" value="{{category.name}}">{{category.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-8 columns">
+            <label>Description</label>
+            <textarea placeholder="Description of company..." name="description" [(ngModel)]="business.description"> </textarea>
+          </div>
+          <div class="large-4 columns">
+            <label>Years in Business</label>
+            <input type="number" min="0" placeholder="Years in Business" name="years_in_business" [(ngModel)]="business.years_in_business">
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-6 columns">
+            <label>Street Address</label>
+            <input type="text" placeholder="Street Address...." name="street_address" [(ngModel)]="business.street_address">
+            <label>City</label>
+            <input type="text" placeholder="City..." name="city" [(ngModel)]="business.city">
+            <label>State</label>
+            <input type="text" placeholder="State...." name="state" [(ngModel)]="business.state">
+            <label>Zipcode</label>
+            <input type="text" placeholder="Zipcode..." name="zipcode" [(ngModel)]="business.zipcode">
+          </div>
+          <div class="large-6 columns">
+            <label>Email</label>
+            <input type="text" placeholder="example@email.com" name="email" [(ngModel)]="business.email">
+            <label>Phone</label>
+            <input type="text" placeholder="555 555 5555" name="phone" [(ngModel)]="business.phone">
+          </div>
+        </div>
+        <button class="button" type="submit">Save</button>
+      </form>
     </div>
   </div>
 </div>

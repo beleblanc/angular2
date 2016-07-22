@@ -14,6 +14,18 @@ export class BusinessService {
   getCategories() {
     return this.categories = this._af.database.list('/categories') as FirebaseListObservable<Category[]>;
   }
+
+  addBusiness(business: Business): Promise<any> {
+    return this.businesses.push(business);
+  }
+
+  removeBusiness(business: Business) {
+    return this._af.database.object(`/businesses/${business.$key}`).remove();
+  }
+
+  updateBusiness(key: string, business: Business): Promise<any> {
+    return this.businesses.update(key, business);
+  }
 }
 
 
@@ -29,7 +41,7 @@ export interface Business {
   street_address?: string;
   years_in_business?: number;
   zipcode?: string;
-  created_at: string;
+  created_at?: string;
 }
 
 export interface Category {
